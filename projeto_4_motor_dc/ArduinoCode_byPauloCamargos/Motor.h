@@ -95,8 +95,8 @@ void Motor::giraHorario(float f_tensao) {
   //Talvez você esteja acumulando lixo
   int cicloPWM = map(tensao, 330 / 2, 330, 0, 255); //Nao entendi mto bem mas deve funcionar
   setSentido(HORARIO);
-  digitalWrite(_pinin2, 0);
-  digitalWrite(_pinin1, 1);
+  digitalWrite(getIN2(), 0);
+  digitalWrite(getIN1(), 1);
   analogWrite(_pinenable, cicloPWM);
   Serial.println("-- SENTIDO HORARIO | TENSAO: " + new String(f_tensao,2) + " V");
 }
@@ -105,17 +105,17 @@ void Motor::giraAntiHorario(float f_tensao) {
   int tensao = f_tensao * 100;
   int cicloPWM = map(tensao, 0, 330 / 2, 0, 255);
   setSentido(ANTI_HORARIO);
-  digitalWrite(_pinin1, 0);
-  digitalWrite(_pinin2, 1);
-  analogWrite(_pinenable, cicloPWM);
+  digitalWrite(getIN1(), 0);
+  digitalWrite(getIN2(), 1);
+  analogWrite(getEnable(), cicloPWM);
   Serial.println("-- SENTIDO ANTI-HORARIO | TENSAO: " + new String(f_tensao,2) + " V");
 }
 
 void Motor::stopMotor(float f_tensao) { // Freio magn�tico do motor
   setSentido(PARADO);
-  digitalWrite(_pinin1, 1);
-  digitalWrite(_pinin2, 1);
-  analogWrite(_pinenable, 0);
+  digitalWrite(getIN1(), 1);
+  digitalWrite(getIN2(), 1);
+  analogWrite(getEnable(), 0);
   Serial.println("-- MOTOR PARADO | TENSAO: " + new String(f_tensao) + " V");
 }
 
@@ -137,9 +137,9 @@ void Motor::dancaMotor(float f_tensao, int tempo) { //Haha
 
 void Motor::desligaMotor(){
   setSentido(PARADO);
-  digitalWrite(_pinin1, 0);
-  digitalWrite(_pinin2, 0);
-  analogWrite(_enable, 0);
+  digitalWrite(getIN1(), 0);
+  digitalWrite(getIN2(), 0);
+  analogWrite(getEnable(), 0);
   Serial.println("-- MOTOR DESLIGADO ---------- ");
 }
 #endif /*Motor_h*/
